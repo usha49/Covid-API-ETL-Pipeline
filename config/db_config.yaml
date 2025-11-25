@@ -1,0 +1,7 @@
+# config/db_config.yaml
+database:
+  username: "postgres"
+  password: "your_password_here"  # You'll update this in .env
+  host: "localhost"
+  port: 5432
+  database_name: "covid_pipeline"
