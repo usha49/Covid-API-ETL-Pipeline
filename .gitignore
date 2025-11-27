@@ -1,2 +1,7 @@
 # Environment variables
- .env
+.env
+data/raw/*
+data/processed/*
+data/logs/*
+__pycache__/
+*.pyc
