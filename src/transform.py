@@ -1,40 +1,33 @@
-countries_df = df[['country', 'countryInfo.iso3', 'population']]
-countries_df.columns = ['country_name', 'iso_code', 'population']
-
-covid_df = df[['country', 'cases', 'deaths', 'recovered', 'tests']]
-covid_df['date'] = pd.to_datetime("today").date()
-
-# src/transform.py
 import pandas as pd
 from datetime import datetime
 import os
- # from src.utils.logger import setup_logger
+from src.utils.logger import setup_logger
 
-# logger = setup_logger(__name__)
+logger = setup_logger(__name__)
 
 def validate_data(df):
     """Perform basic data validation"""
-    # logger.info("Validating raw data...")
+    logger.info("Validating raw data...")
     
     # Check required columns exist
     required_columns = ['country', 'countryInfo.iso3', 'population', 'cases', 'deaths', 'recovered']
     missing_columns = [col for col in required_columns if col not in df.columns]
     
     if missing_columns:
-        ## logger.error(f"Missing required columns: {missing_columns}")
+        logger.error(f"Missing required columns: {missing_columns}")
         raise ValueError(f"Missing required columns: {missing_columns}")
     
     # Check for null values in critical columns
     critical_nulls = df[['country']].isnull().sum()
     if critical_nulls.any():
-        ## logger.warning(f"Null values found in critical columns: {critical_nulls.to_dict()}")
+        logger.warning(f"Null values found in critical columns: {critical_nulls.to_dict()}")
     
-    ## logger.info("Data validation completed")
-   ## return True
+    logger.info("Data validation completed")
+    return True
 
 def create_countries_dimension(df):
     """Create countries dimension table"""
-    ## logger.info("Creating countries dimension...")
+    logger.info("Creating countries dimension...")
     
     countries_df = df[['country', 'countryInfo.iso3', 'population']].copy()
     countries_df.columns = ['country_name', 'iso_code', 'population']
@@ -47,7 +40,7 @@ def create_countries_dimension(df):
     # Remove duplicates
     countries_df = countries_df.drop_duplicates(subset=['country_name']).reset_index(drop=True)
     
-    ##logger.info(f"Created dimension for {len(countries_df)} countries")
+    logger.info(f"Created dimension for {len(countries_df)} countries")
     return countries_df
 
 def create_covid_facts(df):
