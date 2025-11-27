@@ -1,4 +1,3 @@
-# src/load.py
 import pandas as pd
 from sqlalchemy import text
 from src.utils.db_connection import create_db_engine
