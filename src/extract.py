@@ -45,14 +45,15 @@ def save_raw_data(data):
     return df_raw
 
 def extract():
-    """Main extract function"""
+    """Extracting data and returning DataFrame(not saving to file)"""
     logger.info("Starting extraction process")
     
     data = fetch_data_from_api()
-    df_raw = save_raw_data(data)
-    
-    logger.info("Extraction process completed successfully")
-    return df_raw
+    df_raw = pd.json_normalize(data)
+
+    #Airflow will handle this
+    logger.info(f"Extracted {len(df_raw)} records from API")
+    return df_raw # returning the Dataframe for next task
 
 if __name__ == "__main__":
     extract()

@@ -77,7 +77,7 @@ def save_processed_data(countries_df, covid_df):
     logger.info(f"Processed data saved: {countries_file}, {covid_file}")
 
 def transform(df_raw):
-    """Main transform function"""
+    """Transforming data and returning both DataFrames"""
     logger.info("Starting transformation process")
     
     # Validate incoming data
@@ -91,7 +91,7 @@ def transform(df_raw):
     save_processed_data(countries_df, covid_df)
     
     logger.info("Transformation process completed successfully")
-    return countries_df, covid_df
+    return countries_df, covid_df  # returning dataframes for next task
 
 if __name__ == "__main__":
     # For testing - you would need to pass a DataFrame
